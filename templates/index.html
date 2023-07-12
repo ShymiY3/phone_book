@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block content %}
+<div class="row mb-3">
+  <div class="col-lg-6">
+    <form class="d-flex" role="search">
+      <input
+        name="search"
+        class="form-control me-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+</div>
+<table class="table table-striped table-bordered table-dark">
+  <thead>
+    <tr>
+      <th>no.</th>
+      <th>Phone Number</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for entry in phone_book %}
+    <tr>
+      <td>{{ loop.index }}.</td>
+      <td>{{ entry.tel|formatPhone }}</td>
+      <td>{{ entry.first_name }}</td>
+      <td>{{ entry.last_name }}</td>
+      <td>{{ entry.email }}</td>
+      <td>
+        <a href="update/{{ entry.id }}" class="btn btn-primary btn-sm me-2">Edit</a>
+        <a href="delete/{{ entry.id }}" class="btn btn-danger btn-sm">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}

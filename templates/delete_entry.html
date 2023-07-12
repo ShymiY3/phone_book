@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block content %}
+<div class="card">
+  <div class="card-header">
+    <h5>Data to Delete</h5>
+  </div>
+  <div class="card-body">
+    <p>This is the data you want to delete:</p>
+    <ul>
+      {% for key, value in entry.items() %} 
+      {% if key in ['email', 'last_name', 'first_name', 'tel'] and value %}
+      <li><strong>{{ key | capitalize }} </strong>{{value}}</li>
+      {%endif%} {%endfor%}
+    </ul>
+  </div>
+  <div class="card-footer">
+    <form method="POST">
+      <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}
