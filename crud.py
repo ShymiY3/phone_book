@@ -11,7 +11,7 @@ def get_phone_book(db: Session, search: str | None = None):
         or_(
             models.Phone_book.first_name.ilike(f'%{search}%'),
             models.Phone_book.last_name.ilike(f'%{search}%'),
-            models.Phone_book.tel.ilike(f'%{search}%'),
+            models.Phone_book.tel.ilike(f'%{search.replace(" ", "").replace("-","")}%'),
             models.Phone_book.email.ilike(f'%{search}%'),
         )
     ).all()
@@ -39,7 +39,6 @@ def update_phone_book_entry(db: Session, entry: schemas.PhonebookUpdate, entry_i
     if not db_entry:
         raise FormException(status_code=400, detail="Entry not in Phone Book")
     entry_data = entry.dict(exclude_none=True, exclude_unset=True)
-    print(entry_data)
     for key, value in entry_data.items():
         setattr(db_entry, key, value)
         

@@ -32,7 +32,7 @@ class PhonebookInput(PhonebookBase):
             tel = self.tel.replace(' ','').replace('-','') 
             if len(tel) > 9: 
                 if not tel.startswith('+'): 
-                    tel = '+' + 'tel'
+                    tel = '+' + tel
             else:
                 tel = '+48' + tel
             self.tel = tel
