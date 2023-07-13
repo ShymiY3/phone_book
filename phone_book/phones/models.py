@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
-from database import Base
+from phone_book.database import Base
 
 class Phone_book(Base):
     __tablename__ = 'phone_book'
@@ -11,4 +11,5 @@ class Phone_book(Base):
     last_name = Column(String, index= True)
     tel = Column(String)
     email = Column(String)
-    
+    author_id =  Column(Integer,ForeignKey("user.id"))
+    author = relationship("User",back_populates="blogs")
