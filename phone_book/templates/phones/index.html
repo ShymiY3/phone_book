@@ -8,8 +8,11 @@
         type="search"
         placeholder="Search"
         aria-label="Search"
+        {% if request.query_params.get('search') %}
+        value="{{request.query_params.get('search')}}"
+        {% endif %}
       />
-      <button class="btn btn-outline-success" type="submit">Search</button>
+      <button class="btn btn-outline-success" type="submit" >Search</button>
     </form>
   </div>
 </div>
@@ -33,8 +36,10 @@
       <td>{{ entry.last_name }}</td>
       <td>{{ entry.email }}</td>
       <td>
+        {% if user_id == entry.author_id %}
         <a href="update/{{ entry.id }}" class="btn btn-primary btn-sm me-2">Edit</a>
         <a href="delete/{{ entry.id }}" class="btn btn-danger btn-sm">Delete</a>
+        {% endif %}
       </td>
     </tr>
     {% endfor %}

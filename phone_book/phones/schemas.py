@@ -10,6 +10,7 @@ class PhonebookBase(BaseModel):
     last_name: str
     tel: str
     email: EmailStr | None = None
+    author_id: int | None = None
     
 class PhonebookInput(PhonebookBase):
     @classmethod
@@ -46,6 +47,8 @@ class PhonebookInput(PhonebookBase):
         return self
     
     def is_valid(self, db):
+        if not self.author_id:
+            raise FormException(status_code=400, detail="Can't create entry")
         if self.tel:
             try:
                 if not phonenumbers.is_valid_number(phonenumbers.parse(self.tel)):

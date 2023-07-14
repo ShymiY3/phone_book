@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from . import schemas, models
+from . import models, schemas
 from ..exceptions import FormException
 from sqlalchemy import or_
 
@@ -9,8 +9,7 @@ def get_phone_book(db: Session, search: str | None = None):
         return db.query(models.Phone_book).all()
     return db.query(models.Phone_book).filter(
         or_(
-            models.Phone_book.first_name.ilike(f'%{search}%'),
-            models.Phone_book.last_name.ilike(f'%{search}%'),
+            (models.Phone_book.first_name + " " + models.Phone_book.last_name).ilike(f'%{search}%'),
             models.Phone_book.tel.ilike(f'%{search.replace(" ", "").replace("-","")}%'),
             models.Phone_book.email.ilike(f'%{search}%'),
         )
@@ -29,6 +28,7 @@ def create_phone_book_entry(db: Session, entry: schemas.PhonebookInput):
         last_name=entry.last_name,
         tel=entry.tel,
         email=entry.email,
+        author_id=entry.author_id
     )
     db.add(db_entry)
     db.commit()

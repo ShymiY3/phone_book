@@ -11,5 +11,5 @@ class Phone_book(Base):
     last_name = Column(String, index= True)
     tel = Column(String)
     email = Column(String)
-    author_id =  Column(Integer,ForeignKey("user.id"))
-    author = relationship("User",back_populates="blogs")
+    author_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+    author = relationship("User",back_populates="entries")
